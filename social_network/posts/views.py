@@ -22,3 +22,14 @@ class PostViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class CommentViewSet(ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    # filter_backends = [DjangoFilterBackend, OrderingFilter]
+    # ordering_fields = ['id', 'created_at',]
+    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

@@ -9,11 +9,11 @@ from django.contrib.auth.models import User
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     text = models.TextField()
-    image = models.FileField(null=True, blank=None)
+    image = models.FileField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.text
+        return (f'USER: {self.user} POST: {self.text}')
 
     def likes_count(self):
         return self.likes.count()
@@ -29,10 +29,10 @@ class Like(models.Model):
 
 
 class Comment(models.Model):
-    author = models.CharField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
 
     def __str__(self):
-        return self.text
+        return (f'POST: {self.post.text} USER: {self.user} COMMENT: {self.text}')
