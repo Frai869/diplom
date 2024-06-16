@@ -10,7 +10,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Post, Like, Comment
 from .permissions import IsOwnerOrReadOnly
-from .serializers import PostSerializer, CommentSerializer
+from .serializers import PostSerializer, CommentSerializer, LikeSerializer
 
 
 class PostViewSet(ModelViewSet):
@@ -27,9 +27,16 @@ class PostViewSet(ModelViewSet):
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    # filter_backends = [DjangoFilterBackend, OrderingFilter]
-    # ordering_fields = ['id', 'created_at',]
-    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+class LikeViewSet(ModelViewSet):
+    queryset = Like.objects.all()
+    serializer_class = LikeSerializer
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

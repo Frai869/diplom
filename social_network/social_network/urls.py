@@ -18,12 +18,19 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from posts.views import PostViewSet, CommentViewSet
+from django.conf.urls.static import static
+from django.conf import settings
+
+from posts.views import PostViewSet, CommentViewSet, LikeViewSet
 
 r = DefaultRouter()
 r.register('posts', PostViewSet,)
 r.register('comments', CommentViewSet,)
+r.register('likes', LikeViewSet,)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 ] + r.urls
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
