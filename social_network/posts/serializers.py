@@ -1,7 +1,5 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from rest_framework.validators import UniqueTogetherValidator
-
 from posts.models import Comment, Post, Like
 
 
@@ -26,3 +24,9 @@ class LikeSerializer(serializers.ModelSerializer):
         model = Like
         fields = ['id', 'user', 'post', 'like', ]
         read_only_fields = ['user', ]
+
+    def validate(self, data):
+        user = self.context['request'].user
+        if Like.objects.filter(post_id=data['post'].id, user=user).exists():
+            raise ValidationError('You liked this post already! Thank you!')
+        return data

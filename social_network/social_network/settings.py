@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'social_network.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dj-diplom',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
     }
 }
 
@@ -128,7 +128,6 @@ STATIC_ROOT = (BASE_DIR / 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = (BASE_DIR / 'media')
-# настройте STATIC_ROOT, MEDIA_URL и MEDIA_ROOT
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
